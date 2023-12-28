@@ -78,7 +78,7 @@
       }
       body > main {
          display: grid;
-         gap: 15vw;
+         gap: 8vw;
          margin: 0 auto;
          padding: 2.5rem;
       }
@@ -188,84 +188,24 @@
 
    <main>
 
-      <!-- card>t1+hr+form>label>t3+input -->
-      <card>
-         <t1>Frutas</t1>
-         <hr>
-         <label>
-            <t3></t3>
-            <input value="Banana" type="text" readonly>
-         </label>
-         <label>
-            <t3></t3>
-            <input value="Abacate" type="text" readonly>
-         </label>
-         <label>
-            <t3></t3>
-            <input value="Mamão Papaya" type="text" readonly>
-         </label>
-         <label>
-            <t3></t3>
-            <input value="Tomate" type="text" readonly>
-         </label>
-         <label>
-            <t3></t3>
-            <input value="Laranja" type="text" readonly>
-         </label>
-         <!-- <label>
-            <t3></t3>
-            <input value="" type="text" readonly>
-         </label> -->
+      <card 
+         title="Frutas"
+         list="Banana, Abacate, Mamão Papaya, Tomate, Laranja" >
       </card>
 
-      <card>
-         <t1>Legumes</t1>
-         <hr>
-         <label>
-            <t3></t3>
-            <input type="text" value="Batata" readonly="readonly">
-         </label>
-         <label>
-            <t3></t3>
-            <input type="text" value="Alho" readonly="readonly">
-         </label>
-         <label>
-            <t3></t3>
-            <input type="text" value="Feijão" readonly="readonly">
-         </label>
-         <label>
-            <t3></t3>
-            <input type="text" value="Berinjela" readonly="readonly">
-         </label>
+      <card 
+         title="Legumes"
+         list="Batata, Alho, Feijão, Berinjela" >
       </card>
-      <card>
-         <t1>Verduras</t1>
-         <hr>
-         <label>
-            <t3></t3>
-            <input type="text" value="Couve" readonly="readonly">
-         </label>
-         <label>
-            <t3></t3>
-            <input type="text" value="Tudo que for verde escuro" readonly="readonly">
-         </label>
+      <card 
+         title="Verduras" 
+         list="Couve, Tudo que for verde escuro" >
       </card>
-      <card>
-         <t1>Mix</t1>
-         <hr>
-         <label>
-            <t3></t3>
-            <input type="text" value="Iogurte" readonly="readonly">
-         </label>
-         <label>
-            <t3></t3>
-            <input type="text" value="Aveia" readonly="readonly">
-         </label>
-         <label>
-            <t3></t3>
-            <input type="text" value="Peixes" readonly="readonly">
-         </label>
+      <card 
+         title="Mix" 
+         list="Iogurte, Aveia, Peixes" >
       </card>
+
    </main>
     
    <script>
@@ -286,10 +226,52 @@
       window.addEventListener( 'load', ev => {
          let 
             NavLinks = $$( 'navlink' ),
-            Inputs = $$( 'input' )
+            Inputs = $$( 'input' ),
+            Card = $$( "card" )
          ;
 
 
+         Card.forEach( c => {
+            /* let 
+               keys = [],
+               values = []
+            ;
+
+            if( c.getAttributeNames().length != 0 ) {
+               keys.push( ...c.getAttributeNames() );
+               c.getAttributeNames().forEach( v => {
+                  values.push( c.getAttribute( v ) );
+               } );
+
+               for( let idx in keys ) {
+                  _( `key: ${keys[idx]}, value: ${values[idx]}` );
+               }
+            } else {
+               _( "oi" );
+            } */
+
+            let 
+               keys = []
+            ;
+
+            if( c.getAttribute( "list" ).length != 0 ) {
+               keys.push( ...c.getAttribute( "list" ).split( ", " ) );
+            } 
+               
+            c.innerHTML += `
+               <t1>${ c.getAttribute( "title" ) }</title>
+               <hr />
+               <home></home>
+            `;
+            keys.forEach( k => {
+               c.querySelector( "home" ).innerHTML += `
+               <label>
+                  <t3></t3>
+                  <input value="${k}" type="text" readonly>
+               </label>
+            `;
+            } );
+         } );
 
          NavLinks.forEach( link => link.addEventListener( 'click', ev => {
             window.open( link.getAttribute( 'to' ), '_blank' );
